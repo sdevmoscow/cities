@@ -25,6 +25,7 @@ namespace ImportExample
         public List<CityItem> Read()
         {
             using (StreamReader r = new StreamReader(_path))
+
             {
                 string json = r.ReadToEnd();
                 List<CityItem> items = JsonConvert.DeserializeObject<List<CityItem>>(json);

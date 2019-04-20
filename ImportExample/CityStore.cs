@@ -15,22 +15,24 @@ namespace ImportExample
         /// <param name="item"></param>
         public void Save(CityItem item)
         {
-            citiesContext ctx = new citiesContext();
+            using (citiesContext ctx = new citiesContext())
 
-            string[] cities = item.City.Split(" .,".ToArray(), StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (string city in cities)
             {
-                int cityId = SaveCity(city.Trim(), ctx);
+                string[] cities = item.City.Split(" .,".ToArray(), StringSplitOptions.RemoveEmptyEntries);
 
-                ctx.Facts.Add(new Facts
+                foreach (string city in cities)
                 {
-                    CityId = cityId,
-                    Value = item.Value
-                });
-            }
+                    int cityId = SaveCity(city.Trim(), ctx);
 
-            ctx.SaveChanges();
+                    ctx.Facts.Add(new Facts
+                    {
+                        CityId = cityId,
+                        Value = item.Value
+                    });
+                }
+
+                ctx.SaveChanges();
+            }
         }
 
         /// <summary>
